@@ -9,7 +9,7 @@ const Footer = () => {
       <div className="mt-36 ">
         <div className="lg:flex gap-2">
           <div className="flex flex-col gap-6 justify-between  basis-2/4 p-2">
-            <Image src='/zainiee' width={180} height={30} alt="logo" />
+            <Image src='/zainiee1.jpg' width={180} height={30} alt="logo" />
             <p className="text-sm lg:text-md pr-10 text-slate-500">
             High-end clothing and accessories at one place, suits your style.
             </p>

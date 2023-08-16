@@ -74,7 +74,7 @@ const router=useRouter()
               
                 return(
                   <ul className="grid w-[300px] gap-3 p-4 md:w-[300px] md:grid-cols-2 lg:w-[300px] ">
-                 <ListItem  key={component.Category_ID} href={component.Name}>
+                 <ListItem  key={i} href={component.Name}>
                   {component.Name.toUpperCase()}
                  </ListItem>
                  </ul>
@@ -108,17 +108,17 @@ const router=useRouter()
            {showDropdown && (
             <ul className="absolute right-0 mt-2 py-2 bg-white border rounded shadow-lg z-20">
               {isLoaded && userId ? (
-                <li>
+                
                   <button onClick={handleSignOut} className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
                     Sign Out
                   </button>
-                </li>
+                
               ) : (
-                <li>
+                
                   <button onClick={() => router.push('/sign-up/')} className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
                     Sign In/Sign Up
                   </button>
-                </li>
+                
               )} 
             </ul>
           )}

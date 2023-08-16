@@ -20,7 +20,8 @@ export async function POST(req:Request)  {
     const customerId=userId as string //userId
     
     let cart = await db.select().from(Cart)
-   .where(eq(Cart.customerid,customerId))
+    console.log("cart from db is",cart)
+   //.where(eq(Cart.customerid,customerId))
      // const cartid = generateUniqueCartId();
     if (!cart) {
   
