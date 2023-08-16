@@ -17,6 +17,8 @@ interface CardProps {
 
 }
 
+
+
 const Card: React.FC<CardProps> = ({ product, onProductDetails }) => {
 
  
