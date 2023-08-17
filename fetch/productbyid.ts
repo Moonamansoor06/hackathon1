@@ -2,9 +2,7 @@ import { client } from "@/sanity/lib/client";
 const getProductById = async (productId) => {
     try {
    const pId=productId
-    const results=await client.fetch(`*[_type =='product' && Product_ID==${pId}]`,{
-      cache: "no-store",
-    })
+    const results=await client.fetch(`*[_type =='product' && Product_ID==${pId}]`)
       console.log("results",results)
     return results
     } catch (error) {

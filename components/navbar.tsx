@@ -53,15 +53,15 @@ const router=useRouter()
     fetchCategories();
   }, []);
 
-
+const num=0
   
     return (
-      <nav className="relative z-10 flex justify-between items-center h-20 px-10">
+      <div className="relative z-10 flex justify-between items-center h-20 px-10">
       
       <div >
 <NavigationMenu className="">
   <NavigationMenuList>
-  <NavigationMenuItem>
+  <NavigationMenuItem key={num+1}>
      <NavigationMenuTrigger>
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
        fill="none" stroke="currentColor" strokeWidth="2" 
@@ -106,7 +106,7 @@ const router=useRouter()
             <User2 />
           </button>
            {showDropdown && (
-            <ul className="absolute right-0 mt-2 py-2 bg-white border rounded shadow-lg z-20">
+            <div className="absolute right-0 mt-2 py-2 bg-white border rounded shadow-lg z-20">
               {isLoaded && userId ? (
                 
                   <button onClick={handleSignOut} className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
@@ -120,7 +120,7 @@ const router=useRouter()
                   </button>
                 
               )} 
-            </ul>
+            </div>
           )}
         </div>
      
@@ -132,7 +132,7 @@ const router=useRouter()
         </span>
       </div>
       </div> 
-</nav>    
+</div>    
     );
   }
 
@@ -145,7 +145,7 @@ const ListItem = React.forwardRef<
   React.ComponentPropsWithoutRef<"a">
 >(({ className, children, ...props }, ref) => {
   return (
-    <li  >
+    
       <NavigationMenuLink asChild>
         <a
           ref={ref}
@@ -161,7 +161,7 @@ const ListItem = React.forwardRef<
           </p>
         </a>
       </NavigationMenuLink>
-    </li>
+    
   )
 })
 ListItem.displayName = "ListItem"

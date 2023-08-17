@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useAuth } from "@clerk/nextjs";
-import { CartItem, newCartItem } from '@/lib/drizzle'
+//import { CartItem, newCartItem } from '@/lib/drizzle'
 interface CardProps {
   product: {
     Product_ID: number;

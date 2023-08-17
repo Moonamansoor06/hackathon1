@@ -1,8 +1,9 @@
 "use client"
 import React, { useState,useEffect } from 'react';
-import { CartItem, newCartItem } from '@/lib/drizzle'
+//import { CartItem, newCartItem } from '@/lib/drizzle'
 // import { useAuth } from "@clerk/nextjs";
  import { useUser } from "@clerk/nextjs";
+import { projectId } from '@/sanity/env';
 
 
 const Card2 = ({ product, }) => {
@@ -37,7 +38,9 @@ const Card2 = ({ product, }) => {
       let quantity= parseInt(qty)
       console.log("selected variant ",color,size,qty)
       const cartItem = {
+        cartitemid:projectId+userId,
         productId: Product_ID,
+        ProductName:Product_name,
         quantity:1,
         price: Price,
         size: size,
@@ -45,7 +48,7 @@ const Card2 = ({ product, }) => {
       };
       const reqBody = {cartitem:cartItem,userid:userId,useremail:email}
     //  console.log("userid and email is",userId,email)
-     console.log("cartItem is ",cartItem)
+     console.log("cartItem is ",cartItem,"req body is",reqBody)
       await fetch('/api/addToCart', {
         method: 'POST',
         headers: {
