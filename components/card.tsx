@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
+import Image  from 'next/image';
 import { useAuth } from "@clerk/nextjs";
+import { urlForImage} from '@/sanity/lib/image';
+import {Image as IImage} from 'sanity'
 //import { CartItem, newCartItem } from '@/lib/drizzle'
 interface CardProps {
   product: {
@@ -9,7 +11,7 @@ interface CardProps {
     Product_name: string;
     Price: number;
   qty:number;
-    Image:{asset:{_ref:string}};
+    PImage:IImage;
     variants:[{size:string;color:string,qty:number}]
   };
 
@@ -40,18 +42,20 @@ const Card: React.FC<CardProps> = ({ product, onProductDetails }) => {
     onProductDetails(product.Product_ID);
   };
 
-  const { Product_name, Image, Price, variants } = product;
-  console.log("product from card element is", variants);
+  const { Product_name, PImage, Price, variants } = product;
+  console.log("product from card element is", product);
+  const img=urlForImage(PImage).url()
+  console.log("img i s ",img)
 
-  const imageUrl = Image?.asset?._ref || '';
+  // const imageUrl = Image?.asset?._ref || '';
 
-  const imageParts = imageUrl.split('/').pop()?.split('-') || [];
-  const imageId = imageParts[1];
-  const dimensions = imageParts[2]?.replace('-jpg', '') || '';
+  // const imageParts = imageUrl.split('/').pop()?.split('-') || [];
+  // const imageId = imageParts[1];
+  // const dimensions = imageParts[2]?.replace('-jpg', '') || '';
 
-  const finalImageUrl = imageId && dimensions
-    ? `https://cdn.sanity.io/images/${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}/production/${imageId}-${dimensions}.jpg`
-    : '';
+  // const finalImageUrl = imageId && dimensions
+  //   ? `https://cdn.sanity.io/images/${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}/production/${imageId}-${dimensions}.jpg`
+  //   : '';
 
   return (
     <div
@@ -63,13 +67,14 @@ const Card: React.FC<CardProps> = ({ product, onProductDetails }) => {
       
       <div className="mb-4 w-36 h-48">
   
-        {finalImageUrl && (
-          <img
-            src={finalImageUrl}
+        
+          <Image  src={img}
             alt={Product_name}
+            width={200}
+            height={300}
           
           />
-        )}
+        
       </div>
       <div className='my-4'>
         <h1 className="text-2xl font-bold mb-2">{Product_name}</h1>

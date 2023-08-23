@@ -14,12 +14,13 @@ export async function POST(req:Request)  {
     const  cartItem  = request.reqBody.cartitem;
     const userId=request.reqBody.userid
     const email=request.reqBody.email
-    const customerId=userId 
+    const customerId=userId as string 
+    const cid=customerId.substring(5,5)
     console.log("cartItem details",cartItem.productId,"customer i d is",customerId)
     
   
     let cart = await db.select().from(Cart)
-     .where(eq(Cart.Buyerid,userId))
+     .where(eq(Cart.Buyerid,cid))
 
        console.log("cart id is from cart",cart[0].Buyerid)
        // const cartid = generateUniqueCartId();
@@ -30,7 +31,7 @@ export async function POST(req:Request)  {
         .values({
           
            Cartitemid:cartItem.cartitemid,
-           Buyerid:customerId,
+           Buyerid:cid,
            Email: email,
            ProductId:cartItem.productId,
            ProductName:cartItem.productName,

@@ -3,34 +3,33 @@ import React, { useState,useEffect } from 'react';
 //import { CartItem, newCartItem } from '@/lib/drizzle'
 // import { useAuth } from "@clerk/nextjs";
  import { useUser } from "@clerk/nextjs";
-import { projectId } from '@/sanity/env';
+ import { urlForImage} from '@/sanity/lib/image';
+ import Image  from 'next/image';
+ import { useRouter } from 'next/navigation';
 
 
 const Card2 = ({ product, }) => {
  // const { isLoaded, userId, } = useAuth();
+ const router=useRouter()
    const user=useUser()
      console.log("user is ",user.user.emailAddresses[0].emailAddress)
  const email=user?.user.emailAddresses[0].emailAddress as string
   const userId=user.user.id
-  const [selectedVariant, setSelectedVariant] = useState({size:'',color:'',qty:'',image:{asset:{_ref:''}}});
+  const [selectedVariant, setSelectedVariant] = useState({size:'',color:'',qty:'',Pimage:{}});
   const [isHovered, setIsHovered] = useState(false);
   const [selectedVariantImageUrl, setSelectedVariantImageUrl] = useState('');
-  const { Product_ID,Product_name, Image, Price, variants,Description } = product[0];
+  const { Product_ID,Product_name, PImage, Price, variants,Description } = product[0];
+
   console.log("product" ,Price,Product_name,variants,Product_ID)
+
+
   useEffect(() => {
     setSelectedVariant(variants[0])
-    const imageUrl = variants[0]?.image?.asset?._ref || '';
-    const imageParts = imageUrl.split('/').pop()?.split('-') || [];
-    const imageId = imageParts[1];
-    const dimensions = imageParts[2]?.replace('-jpg', '') || '';
-  
-    const variantImageUrl = imageId && dimensions
-      ? `https://cdn.sanity.io/images/${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}/production/${imageId}-${dimensions}.jpg`
-      : '';
-  
+       // console.log("seleteted image of f variants from use effect is",urlForImage(selectedVariant.PImage).url())
+    const variantImageUrl=urlForImage(variants[0].Pimage).url()
     setSelectedVariantImageUrl(variantImageUrl);
   }, [])
-  
+  const citemid=userId.substring(0,6)
   const handleAddToCart = async () => {
    
     try {
@@ -38,7 +37,8 @@ const Card2 = ({ product, }) => {
       let quantity= parseInt(qty)
       console.log("selected variant ",color,size,qty)
       const cartItem = {
-        cartitemid:projectId+userId,
+        cartitemid:citemid,
+        Buyerid:userId,
         productId: Product_ID,
         ProductName:Product_name,
         quantity:1,
@@ -49,7 +49,7 @@ const Card2 = ({ product, }) => {
       const reqBody = {cartitem:cartItem,userid:userId,useremail:email}
     //  console.log("userid and email is",userId,email)
      console.log("cartItem is ",cartItem,"req body is",reqBody)
-      await fetch('/api/addToCart', {
+      await fetch('/api/cart', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -62,6 +62,7 @@ const Card2 = ({ product, }) => {
     } catch (error) {
       console.error('Error adding to cart:', error);
     }
+    router.push('/cart/')
   };
   
   
@@ -69,45 +70,23 @@ const Card2 = ({ product, }) => {
 
     setSelectedVariant(variant);
   
-    const imageUrl = variant?.image?.asset?._ref || '';
-    const imageParts = imageUrl.split('/').pop()?.split('-') || [];
-    const imageId = imageParts[1];
-    const dimensions = imageParts[2]?.replace('-jpg', '') || '';
-  
-    const variantImageUrl = imageId && dimensions
-      ? `https://cdn.sanity.io/images/${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}/production/${imageId}-${dimensions}.jpg`
-      : '';
-  
+  const variantImageUrl=urlForImage(variant.Pimage).url()
     setSelectedVariantImageUrl(variantImageUrl);
   };
-  
-
-  // const { Product_name, Image, Price, variants,Description } = product[0];
-
-  const imageUrl = Image?.asset?._ref || '';
-  const imageParts = imageUrl.split('/').pop()?.split('-') || [];
-  const imageId = imageParts[1];
-  const dimensions = imageParts[2]?.replace('-jpg', '') || '';
-
-  const initialFinalImageUrl = imageId && dimensions
-    ? `https://cdn.sanity.io/images/${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}/production/${imageId}-${dimensions}.jpg`
-    : '';
-
-  const finalImageUrl = selectedVariant?.image?.asset?._ref || initialFinalImageUrl;
+  // const img=urlForImage(PImage).url()
+  // console.log("img i s ",img)
 
   return (
-    <div className="bg-white mr-4 ml-4 mt-8 p-4 shadow rounded flex flex-col md:flex-row lg:flex-row justify-between items-stretch">
+    <div className="bg-white mr-4 ml-4 mt-8 p-4 shadow rounded flex flex-col md:flex-row lg:flex-row justify-evenly items-stretch">
       
                             <div className="mb-4 w-200 h-200 md:w-auto md:h-auto">
-                              {finalImageUrl && (
-                                <img
-                                src={selectedVariantImageUrl || finalImageUrl}
-                                  alt={Product_name}
-                               
-                                  onMouseEnter={() => setIsHovered(true)}
-                                  onMouseLeave={() => setIsHovered(false)}
+                              {/* {finalImageUrl && ( */}
+                                <Image  src={selectedVariantImageUrl}
+                                alt={selectedVariantImageUrl}
+                                width={200}
+                                height={300}                                     
                                 />
-                              )}
+                              {/* )} */}
                             </div>
       <div className='w-[50%] flex flex-col justify-around'>
       <h3 className="text-2xl font-bold mb-2 font-head1Main">{Product_name}</h3>
@@ -130,6 +109,7 @@ const Card2 = ({ product, }) => {
                   <button onClick={handleAddToCart} className="bg-blue-500 text-white px-4 py-2">
                     Add to Cart
                   </button>
+                  {/* <CartButton res={cartItem}/> */}
                 </div>
         </div>
         

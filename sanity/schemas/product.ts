@@ -1,7 +1,7 @@
-
-export default {
+import { defineType } from "sanity";
+export default defineType( {
   name: 'product',
-  title: 'Product',
+  title: 'product',
   type: 'document',
   fields: [
     {
@@ -16,7 +16,7 @@ export default {
     },
      {
       name: 'Product_name',
-      title: 'Product name',
+      title: 'Product name' ,
       type: 'string',
     },
      {
@@ -61,8 +61,8 @@ export default {
               },
             },
             {
-              title: 'Image',
-              name: 'image',
+              title: 'Pimage',
+              name: 'Pimage',
               type: 'image',
               options: {
                 hotspot: true,
@@ -92,9 +92,9 @@ export default {
 
     
        {
-      name: 'Image',
-      title: 'Image',
+      name: 'PImage',
+      title: 'PImage',
       type: 'image',
     }
   ],
-};
+});
