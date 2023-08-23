@@ -1,8 +1,8 @@
-"use client";
+
 import React from "react";
 import { Cart } from "@/lib/drizzle";
 import { TiTrash } from "react-icons/ti";
-import { useRouter } from "next/navigation";
+//import { useRouter } from "next/navigation";
 import { getAllProducts } from "../../fetch/productsList";
 import Image from "next/image";
 import getStripePromise from "@/lib/stripe";
@@ -14,7 +14,7 @@ type CookiesUid = {
 };
 
 export default async function CartPage(userId) {
-  const { refresh } = useRouter();
+ // const { refresh } = useRouter();
   const res = await getAllProducts();
 
   const handleToast = () => {
@@ -33,7 +33,7 @@ export default async function CartPage(userId) {
         });
 
         if (response.ok) {
-          refresh();
+   //       refresh();
         } else {
           console.log("Delete request failed with status:", response.status);
         }
