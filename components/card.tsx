@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image  from 'next/image';
 import { useAuth } from "@clerk/nextjs";
-import { urlForImage} from '@/sanity/lib/image';
+import { urlForImage} from '../sanity/lib/image';
 import {Image as IImage} from 'sanity'
 //import { CartItem, newCartItem } from '@/lib/drizzle'
 interface CardProps {

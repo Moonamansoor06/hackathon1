@@ -1,5 +1,5 @@
 import {
-  numeric,
+  integer,
   pgTable,
   serial,
   text,
@@ -15,19 +15,19 @@ import { drizzle } from 'drizzle-orm/vercel-postgres';
 export const Cart = pgTable(
   'cart',
   {
-    Cartid: serial('cartid').primaryKey(),
-    Cartitemid:text('cartitemid'),
-    Buyerid: varchar('Buyerid'),
-    Email: text('email').notNull(),
-    ProductId: numeric('productid').notNull(),
-    ProductName:text('productName'),
-    Quantity: numeric('quantity').notNull(),
-    Price: numeric('price').notNull(),
+    cartid: serial('cartid').primaryKey(),
+    cartitemid:varchar('cartitemid'),
+    buyerid: varchar('buyerid'),
+    email: text('email').notNull(),
+    productId: integer('productid').notNull(),
+    productname:text('productname'),
+    quantity: integer('quantity').notNull(),
+    price: integer('price').notNull(),
   
   },
   (cart) => {
     return {
-      uniqueIdx: uniqueIndex('unique_idx').on(cart.Cartid),
+      uniqueIdx: uniqueIndex('unique_idx').on(cart.cartid),
     };
   }
 );
@@ -50,7 +50,7 @@ export const Cart = pgTable(
 
 // export type CartItem = InferModel<typeof CartItem>;
 // export type newCartItem = InferModel<typeof CartItem, 'insert'>;
-export type Cart = InferModel<typeof Cart>;
+export type CartType = InferModel<typeof Cart>;
 export type newCart = InferModel<typeof Cart, 'insert'>;
 
 export const db = drizzle(sql);

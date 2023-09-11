@@ -1,9 +1,9 @@
 import './globals.css';
 //import { Inter } from 'next/font/google';
-import Navbar from '@/components/navbar';
-import Navbar2 from '@/components/nav2';
+import Navbar from '../components/navbar';
+import Navbar2 from '../components/nav2';
 import {ClerkProvider} from '@clerk/nextjs'
-import Footer from '@/components/footer';
+import Footer from '../components/footer';
 
 export const metadata = {
   title: 'zainiee online store',
